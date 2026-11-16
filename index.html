@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenLibStack — K–12 Librarian & Teacher Open-Source & AI Directory (58 Tools)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Fraunces (Scholarly Display Serif) & Inter (Crisp UI Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            parchment: '#FAF9F6',
+            forest: {
+              DEFAULT: '#2E5A44',
+              dark: '#224433',
+              light: '#EBF3EE',
+              border: '#C6DDD0'
+            },
+            slateink: '#1E293B',
+          },
+          fontFamily: {
+            serif: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FAF9F6;
+      color: #1E293B;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    /* Multi-Mode Website Grid Definitions */
+    .grid-compact {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .grid-ultradense {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    /* Smooth Card Hover & Depth */
+    .tool-tile {
+      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+    .tool-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px -6px rgba(30, 41, 59, 0.12), 0 4px 10px -4px rgba(46, 90, 68, 0.08);
+      border-color: #2E5A44;
+    }
+
+    /* Hide scrollbars cleanly for horizontal pill strips */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Custom subtle grid texture inside mockup fallback */
+    .mockup-grid-bg {
+      background-image: radial-gradient(rgba(30, 41, 59, 0.08) 1px, transparent 1px);
+      background-size: 10px 10px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-forest-light selection:text-forest">
+
+  <!-- Top Navigation Header -->
+  <header class="bg-white border-b border-slate-200/90">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <!-- Brand Identity -->
+      <div class="flex items-start sm:items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-forest text-white flex items-center justify-center shrink-0 shadow-sm">
+          <!-- Open Book + Spark SVG -->
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <h1 class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+              OpenLibStack
+            </h1>
+            <span id="headerTotalBadge" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-forest-light text-forest border border-forest-border">
+              58 Vetted Tools
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 mt-0.5">
+            Visual Directory of Open-Source, Free &amp; Classroom AI Tools for K–12 Librarians &amp; Educators
+          </p>
+        </div>
+      </div>
+
+      <!-- Primary Header Actions -->
+      <div class="flex flex-wrap items-center gap-2.5">
+        <button id="exportCsvBtn" type="button" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition shadow-2xs cursor-pointer">
+          <svg class="w-4 h-4 text-forest" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span id="exportCsvLabel">Export Excel CSV (58 Tools)</span>
+        </button>
+
+        <button id="openSubmitModalBtn" type="button" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-forest text-white hover:bg-forest-dark transition shadow-xs cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+          <span>Submit a Tool</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Multi-Control Filter & Grid View Toolbar -->
+  <div class="sticky top-0 z-30 bg-parchment/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-2.5">
+
+      <!-- Row 1: Search, License Filter, Grade Filter, Sort & Grid Layout Switcher -->
+      <div class="flex flex-col lg:flex-row lg:items-center gap-2.5">
+        <!-- Real-Time Search Input -->
+        <div class="relative flex-1 min-w-[220px]">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.15 6.15z" />
+          </svg>
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search 58 tools by name, teacher/librarian use case, grade band, or keyword..."
+            class="w-full pl-9 pr-8 py-2 rounded-lg bg-white border border-slate-300 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-forest/30 focus:border-forest"
+          />
+          <button id="clearSearchBtn" type="button" title="Clear search" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-0.5 cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Dropdown Filters & Grid Density Switcher -->
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Access / License Model Filter -->
+          <select id="licenseFilter" aria-label="Filter by Access Model" class="px-2.5 py-2 rounded-lg bg-white border border-slate-300 text-xs font-medium text-slate-700 focus:outline-none focus:border-forest cursor-pointer">
+            <option value="ALL">All Licenses</option>
+            <option value="True Open Source">True Open Source</option>
+            <option value="Free / Open Access">Free / Open Access</option>
+            <option value="Freemium for Educators">Freemium for Educators</option>
+          </select>
+
+          <!-- Grade Band Filter -->
+          <select id="gradeFilter" aria-label="Filter by Grade Band" class="px-2.5 py-2 rounded-lg bg-white border border-slate-300 text-xs font-medium text-slate-700 focus:outline-none focus:border-forest cursor-pointer">
+            <option value="ALL">All Grades</option>
+            <option value="Elementary">Elementary (K–5)</option>
+            <option value="Middle">Middle (6–8)</option>
+            <option value="High">High School (9–12)</option>
+          </select>
+
+          <!-- Sort Selector -->
+          <select id="sortSelect" aria-label="Sort Tools" class="px-2.5 py-2 rounded-lg bg-white border border-slate-300 text-xs font-medium text-slate-700 focus:outline-none focus:border-forest cursor-pointer">
+            <option value="curated">Sort: Curated Order</option>
+            <option value="az">Sort: A → Z</option>
+            <option value="za">Sort: Z → A</option>
+            <option value="license">Sort: Open Source First</option>
+          </select>
+
+          <!-- 3-Mode Grid Layout Toggle -->
+          <div class="inline-flex rounded-lg bg-slate-200/80 p-0.5 border border-slate-300/80" role="group" aria-label="Grid View Mode">
+            <button type="button" data-grid-mode="compact" class="grid-mode-btn px-2.5 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer bg-white text-forest shadow-2xs">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+              <span>Compact Tiles (4-Col)</span>
+            </button>
+            <button type="button" data-grid-mode="ultradense" class="grid-mode-btn px-2.5 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer text-slate-600 hover:text-slate-900">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 5h4v4H4V5zm6 0h4v4h-4V5zm6 0h4v4h-4V5zM4 11h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 17h4v3H4v-3zm6 0h4v3h-4v-3zm6 0h4v3h-4v-3z" />
+              </svg>
+              <span>Ultra-Dense (5-Col)</span>
+            </button>
+            <button type="button" data-grid-mode="grouped" class="grid-mode-btn px-2.5 py-1.5 rounded-md text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer text-slate-600 hover:text-slate-900">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              <span>Grouped by Category</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Category Filter Pills + Live Results Counter -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-0.5">
+        <div id="categoryPillsContainer" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="flex items-center justify-between sm:justify-end gap-3 shrink-0 text-xs text-slate-600">
+          <span id="resultsStatusText" class="font-medium">Showing 58 of 58 tools</span>
+          <button id="resetAllFiltersBtn" type="button" class="hidden text-forest font-semibold hover:underline cursor-pointer">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Main Grid Viewport -->
+  <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5">
+    <!-- Quick License Legend Strip -->
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-200/70 text-xs text-slate-600">
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="font-semibold text-slate-700">Access Key:</span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          <span>True Open Source</span>
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+          <span>Free / Open Access</span>
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+          <span>Freemium for Educators</span>
+        </span>
+      </div>
+      <div class="text-slate-500">
+        Click any tile for <span class="font-medium text-slate-700">Classroom &amp; Library Implementation Guides</span>
+      </div>
+    </div>
+
+    <!-- Dynamic Tools Grid Container -->
+    <div id="gridMountPoint"></div>
+
+    <!-- Empty Search State -->
+    <div id="emptyStateBox" class="hidden bg-white rounded-2xl border border-slate-200 p-10 text-center max-w-lg mx-auto my-8 shadow-xs">
+      <div class="w-12 h-12 rounded-full bg-forest-light text-forest flex items-center justify-center mx-auto mb-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.15 6.15z" />
+        </svg>
+      </div>
+      <h3 class="font-serif text-lg font-bold text-slate-900">No matching tools found</h3>
+      <p class="text-sm text-slate-600 mt-1">
+        Try clearing your search query or switching back to "All" categories and grade bands.
+      </p>
+      <button id="emptyResetBtn" type="button" class="mt-4 px-4 py-2 rounded-lg bg-forest text-white text-xs font-semibold hover:bg-forest-dark transition cursor-pointer">
+        Show All 58 Tools
+      </button>
+    </div>
+  </main>
+
+  <!-- Compact Scholarly Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-8">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+      <div>
+        <span class="font-semibold text-slate-700">OpenLibStack</span> — Curated for K–12 School Librarians, Media Specialists &amp; Classroom Teachers.
+      </div>
+      <div>
+        All 58 tools verified for instructional value, collection curation &amp; student AI literacy.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Banner -->
+  <div id="toastBanner" class="fixed bottom-5 right-5 z-50 hidden items-center gap-2.5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg text-xs sm:text-sm font-medium border border-slate-700">
+    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+    <span id="toastMessage">Action completed</span>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: Teaching & Library Implementation Guide Modal                -->
+  <!-- ===================================================================== -->
+  <div id="guideModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-5 bg-slate-900/60 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="modalToolTitle">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto">
+      <!-- Modal Top Visual Banner -->
+      <div id="modalVisualHeader" class="relative h-44 sm:h-52 bg-slate-100 border-b border-slate-200 overflow-hidden">
+        <!-- Populated dynamically with live screenshot + rich UI mockup fallback -->
+      </div>
+
+      <!-- Modal Content Body -->
+      <div class="p-5 sm:p-7 space-y-5">
+        <!-- Title, Favicon & Badges -->
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+          <div class="flex items-start gap-3.5">
+            <img id="modalFavicon" src="" alt="" class="w-11 h-11 rounded-xl border border-slate-200 bg-white p-1.5 object-contain shrink-0 shadow-2xs" />
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h2 id="modalToolTitle" class="font-serif text-xl sm:text-2xl font-bold text-slate-900">Tool Name</h2>
+                <span id="modalLicenseBadge" class="px-2.5 py-0.5 rounded-full text-xs font-semibold">License</span>
+              </div>
+              <p id="modalCategoryText" class="text-xs font-medium text-forest mt-1">Category</p>
+            </div>
+          </div>
+
+          <a id="modalVisitLink" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-forest text-white text-xs sm:text-sm font-semibold hover:bg-forest-dark transition shrink-0 shadow-xs">
+            <span>Launch Official Site</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Quick Metadata Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-parchment p-3.5 rounded-xl border border-slate-200/80 text-xs">
+          <div>
+            <span class="text-slate-500 block font-medium">Target Grade Band</span>
+            <span id="modalGradeBand" class="font-semibold text-slate-800 mt-0.5 block">K–12</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block font-medium">Cost &amp; Access Model</span>
+            <span id="modalCostDetail" class="font-semibold text-slate-800 mt-0.5 block">Free</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block font-medium">Domain / Platform</span>
+            <span id="modalDomainText" class="font-mono text-slate-700 mt-0.5 block truncate">example.org</span>
+          </div>
+        </div>
+
+        <!-- Core Overview -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Platform Overview</h3>
+          <p id="modalSummaryText" class="text-sm text-slate-700 leading-relaxed">Summary text</p>
+        </div>
+
+        <!-- Two-Column Educator & Librarian Use Cases -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-forest-light/60 border border-forest-border rounded-xl p-4">
+            <div class="flex items-center gap-2 text-forest font-bold text-xs uppercase tracking-wider mb-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+              </svg>
+              <span>Classroom Teacher Use Case</span>
+            </div>
+            <p id="modalTeacherUse" class="text-xs sm:text-sm text-slate-700 leading-relaxed">Teacher use case details</p>
+          </div>
+
+          <div class="bg-amber-50/70 border border-amber-200/80 rounded-xl p-4">
+            <div class="flex items-center gap-2 text-amber-900 font-bold text-xs uppercase tracking-wider mb-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+              </svg>
+              <span>Library Media Specialist Use Case</span>
+            </div>
+            <p id="modalLibrarianUse" class="text-xs sm:text-sm text-slate-700 leading-relaxed">Librarian use case details</p>
+          </div>
+        </div>
+
+        <!-- Privacy & AI Literacy Note -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-start gap-3">
+          <svg class="w-5 h-5 text-slate-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700">Privacy, FERPA &amp; AI Literacy Note</h4>
+            <p id="modalPrivacyNote" class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">Privacy details</p>
+          </div>
+        </div>
+
+        <!-- Tags & Footer Close -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200">
+          <div id="modalTagsContainer" class="flex flex-wrap gap-1.5"></div>
+          <button id="closeGuideModalBtn" type="button" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition cursor-pointer">
+            Close Guide
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 2: Submit a New Tool Modal                                      -->
+  <!-- ===================================================================== -->
+  <div id="submitModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-5 bg-slate-900/60 backdrop-blur-xs" role="dialog" aria-modal="true" aria-labelledby="submitModalTitle">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-5 sm:p-6">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div>
+          <h2 id="submitModalTitle" class="font-serif text-xl font-bold text-slate-900">Submit a Tool to OpenLibStack</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Appends directly to the live directory grid and updates CSV export counts.</p>
+        </div>
+        <button id="closeSubmitModalX" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="submitToolForm" class="space-y-3.5 mt-4 text-xs sm:text-sm">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Tool Name *</label>
+            <input name="name" required placeholder="e.g., GeoGebra" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-forest" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Official URL *</label>
+            <input name="url" type="url" required placeholder="https://www.geogebra.org" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-forest" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Category *</label>
+            <select name="category" required class="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white focus:outline-none focus:border-forest">
+              <option value="AI Teaching & Lesson Planning">AI Teaching &amp; Lesson Planning</option>
+              <option value="AI Literacy & Media Verification">AI Literacy &amp; Media Verification</option>
+              <option value="Research, Citations & Source Analysis">Research, Citations &amp; Source Analysis</option>
+              <option value="Design, Video & Interactive Coding">Design, Video &amp; Interactive Coding</option>
+              <option value="Library Curation, Readers' Advisory & Systems">Library Curation, Readers' Advisory &amp; Systems</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Access / License Model *</label>
+            <select name="license" required class="w-full px-3 py-2 rounded-lg border border-slate-300 bg-white focus:outline-none focus:border-forest">
+              <option value="True Open Source">True Open Source</option>
+              <option value="Free / Open Access">Free / Open Access</option>
+              <option value="Freemium for Educators">Freemium for Educators</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Grade Band *</label>
+            <input name="gradeBand" required placeholder="e.g., Grades 6–12 (Middle & High)" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-forest" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Pricing / License Detail</label>
+            <input name="costDetail" placeholder="e.g., GPLv3 Open Source / Free" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-forest" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Concise Summary *</label>
+          <textarea name="summary" rows="2" required placeholder="Brief 1–2 sentence description of what this tool does..." class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-forest"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Classroom Teacher Use Case</label>
+            <textarea name="teacherUse" rows="2" placeholder="How teachers integrate it into lessons..." class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-forest"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Librarian / Media Specialist Use Case</label>
+            <textarea name="librarianUse" rows="2" placeholder="How librarians use it for curation or PD..." class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-forest"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Privacy &amp; AI Literacy Note</label>
+          <input name="privacyNote" placeholder="e.g., No student login required for browser access." class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-forest" />
+        </div>
+
+        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-200">
+          <button id="cancelSubmitModalBtn" type="button" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold cursor-pointer">
+            Cancel
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-lg bg-forest hover:bg-forest-dark text-white text-xs font-semibold shadow-xs cursor-pointer">
+            Add Tool to Grid
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. COMPLETE 58-TOOL CURATED DATASET ACROSS 5 CATEGORIES
+    // =========================================================================
+    const CATEGORIES = [
+      "AI Teaching & Lesson Planning",
+      "AI Literacy & Media Verification",
+      "Research, Citations & Source Analysis",
+      "Design, Video & Interactive Coding",
+      "Library Curation, Readers' Advisory & Systems"
+    ];
+
+    const CATEGORY_META = {
+      "AI Teaching & Lesson Planning": {
+        short: "AI Teaching & Lesson Planning",
+        accent: "#2E5A44",
+        bgTint: "from-emerald-50 to-teal-50",
+        badgeBg: "bg-emerald-100/80 text-emerald-900",
+        description: "Lesson generators, text levelers, Socratic student tutors, and teacher workflow assistants."
+      },
+      "AI Literacy & Media Verification": {
+        short: "AI Literacy & Media Verification",
+        accent: "#1D4ED8",
+        bgTint: "from-sky-50 to-indigo-50",
+        badgeBg: "bg-sky-100/80 text-sky-900",
+        description: "Lateral reading curricula, synthetic media games, ML training labs, and AI detection demos."
+      },
+      "Research, Citations & Source Analysis": {
+        short: "Research, Citations & Source Analysis",
+        accent: "#6D28D9",
+        bgTint: "from-violet-50 to-purple-50",
+        badgeBg: "bg-violet-100/80 text-violet-900",
+        description: "Open-source citation managers, source-grounded notebooks, academic search, and literature mapping."
+      },
+      "Design, Video & Interactive Coding": {
+        short: "Design, Video & Interactive Coding",
+        accent: "#B45309",
+        bgTint: "from-amber-50 to-orange-50",
+        badgeBg: "bg-amber-100/80 text-amber-900",
+        description: "Open-source media editors, block/text coding sandboxes, interactive books, and curation boards."
+      },
+      "Library Curation, Readers' Advisory & Systems": {
+        short: "Library Curation, Readers' Advisory & Systems",
+        accent: "#0F766E",
+        bgTint: "from-teal-50 to-cyan-50",
+        badgeBg: "bg-teal-100/80 text-teal-900",
+        description: "Collection diversity audits, readers' advisory, primary source archives, LMS, and ILS platforms."
+      }
+    };
+
+    let toolsData = [
+      // =======================================================================
+      // CATEGORY 1: AI Teaching & Lesson Planning (8 Tools)
+      // =======================================================================
+      {
+        id: 1,
+        name: "MagicSchool AI",
+        url: "https://www.magicschool.ai",
+        category: "AI Teaching & Lesson Planning",
+        license: "Freemium for Educators",
+        costDetail: "Free Teacher Tier + MagicSchool for Students",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Comprehensive K–12 AI assistant offering 80+ teacher tools for lesson plans, rubrics, IEP accommodations, and moderated student AI rooms.",
+        teacherUse: "Generate standards-aligned lesson plans, tiered exit tickets, and rubric matrices in seconds.",
+        librarianUse: "Lead faculty PD workshops on safe prompt engineering and launch moderated research helper bots for students.",
+        privacyNote: "FERPA & COPPA compliant; student rooms require no personal student account creation.",
+        tags: ["Lesson Planning", "Rubrics", "IEP Support", "Student Rooms"]
+      },
+      {
+        id: 2,
+        name: "Diffit",
+        url: "https://web.diffit.me",
+        category: "AI Teaching & Lesson Planning",
+        license: "Freemium for Educators",
+        costDetail: "Free Core Tier (Pro for districts)",
+        gradeBand: "Grades 2–12 (Elementary, Middle, High)",
+        summary: "Instant text-leveling and differentiation engine that adapts any article, PDF, or YouTube video to specific Lexile/grade reading levels.",
+        teacherUse: "Convert complex primary sources or science news into 3 reading levels with built-in vocabulary and comprehension questions.",
+        librarianUse: "Support inclusive inquiry projects where every student reads the same core topic at an accessible reading level.",
+        privacyNote: "Teacher-facing tool; exports cleanly to Google Docs, Slides, and Forms without student logins.",
+        tags: ["Differentiation", "Reading Levels", "Vocabulary", "Scaffolding"]
+      },
+      {
+        id: 3,
+        name: "SchoolAI",
+        url: "https://schoolai.com",
+        category: "AI Teaching & Lesson Planning",
+        license: "Freemium for Educators",
+        costDetail: "Free for Individual Teachers",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Teacher-monitored AI 'Spaces' enabling students to chat with historical figures, book characters, or Socratic tutors with real-time dashboards.",
+        teacherUse: "Deploy Socratic math or writing coaches that guide students with hints rather than giving away answers.",
+        librarianUse: "Create interactive 'Book Talk' or historical figure interview stations during library orientation and research units.",
+        privacyNote: "Built-in safety guardrails alert educators immediately if student prompts flag academic integrity or wellbeing concerns.",
+        tags: ["Socratic Tutor", "Monitored Spaces", "Historical Chat", "Safety Guardrails"]
+      },
+      {
+        id: 4,
+        name: "Khanmigo (Khan Academy)",
+        url: "https://www.khanacademy.org/khan-labs",
+        category: "AI Teaching & Lesson Planning",
+        license: "Free / Open Access",
+        costDetail: "Free for All U.S. Educators (Nonprofit)",
+        gradeBand: "Grades 3–12 (Elementary, Middle, High)",
+        summary: "Khan Academy's nonprofit AI teaching assistant and Socratic tutor engineered never to write essays or solve math problems for students.",
+        teacherUse: "Draft unit hooks, exit tickets, and class performance summaries directly linked to Khan Academy mastery data.",
+        librarianUse: "Model ethical, non-cheating AI tutoring behavior for faculty and parents during digital citizenship nights.",
+        privacyNote: "Nonprofit educational governance with strict K–12 data privacy protections and full chat transcripts for teachers.",
+        tags: ["Nonprofit", "Socratic Tutoring", "Math & Humanities", "Lesson Hooks"]
+      },
+      {
+        id: 5,
+        name: "Curipod",
+        url: "https://curipod.com",
+        category: "AI Teaching & Lesson Planning",
+        license: "Freemium for Educators",
+        costDetail: "Free Basic Plan",
+        gradeBand: "Grades 2–12 (Elementary, Middle, High)",
+        summary: "Interactive slide deck generator that builds live polls, word clouds, drawing prompts, and instant AI writing feedback for whole-class participation.",
+        teacherUse: "Turn a topic prompt into an interactive bell-ringer or review deck where every student responds from their Chromebook.",
+        librarianUse: "Run engaging, anonymous pre- and post-assessments during library information literacy and source evaluation lessons.",
+        privacyNote: "Students join via temporary PIN code without creating accounts or sharing email addresses.",
+        tags: ["Interactive Slides", "Live Polls", "Instant Feedback", "Formative Assessment"]
+      },
+      {
+        id: 6,
+        name: "Brisk Teaching",
+        url: "https://www.briskteaching.com",
+        category: "AI Teaching & Lesson Planning",
+        license: "Freemium for Educators",
+        costDetail: "Free Forever Chrome Extension for Teachers",
+        gradeBand: "Grades 3–12 (Elementary, Middle, High)",
+        summary: "Chrome extension operating directly inside Google Docs, Slides, and web articles to generate feedback, level text, and inspect writing revision history.",
+        teacherUse: "Leave targeted 'Glow & Grow' rubric feedback in Google Docs and replay student keystroke/paste history via Inspect Writing.",
+        librarianUse: "Help English and Social Studies teachers verify authentic student research drafting vs. bulk AI copy-pasting.",
+        privacyNote: "Works inside existing Google Workspace for Education environments; does not train models on student work.",
+        tags: ["Chrome Extension", "Google Docs", "Inspect Writing", "Rubric Feedback"]
+      },
+      {
+        id: 7,
+        name: "Goblin Tools",
+        url: "https://goblin.tools",
+        category: "AI Teaching & Lesson Planning",
+        license: "Free / Open Access",
+        costDetail: "100% Free Web App (Neurodivergent-Friendly)",
+        gradeBand: "Grades 5–12 (Middle, High)",
+        summary: "Collection of single-purpose executive-function tools including Magic ToDo (task breakdown), Formalizer (tone adjuster), and Judge (tone reader).",
+        teacherUse: "Break complex multi-week research papers into micro-step checklists for neurodivergent or overwhelmed learners.",
+        librarianUse: "Teach executive functioning and research project chunking during library study-skills workshops.",
+        privacyNote: "No account required on web; zero ads and minimal data collection.",
+        tags: ["Executive Function", "Task Breakdown", "Accessibility", "Neurodiversity"]
+      },
+      {
+        id: 8,
+        name: "Eduaide.Ai",
+        url: "https://www.eduaide.ai",
+        category: "AI Teaching & Lesson Planning",
+        license: "Freemium for Educators",
+        costDetail: "Generous Free Teacher Tier",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Teacher-designed workspace featuring 110+ pedagogical resources, graphic organizers, cooperative learning structures, and assessment builders.",
+        teacherUse: "Generate Jigsaw activities, choice boards, and tiered reading passages grounded in evidence-based instructional frameworks.",
+        librarianUse: "Rapidly design printable graphic organizers and research pathfinders tailored to specific classroom projects.",
+        privacyNote: "Built specifically for educator workflow; no student accounts or student PII required.",
+        tags: ["Graphic Organizers", "Choice Boards", "Pedagogy", "Assessment"]
+      },
+
+      // =======================================================================
+      // CATEGORY 2: AI Literacy & Media Verification (9 Tools)
+      // =======================================================================
+      {
+        id: 9,
+        name: "Two Truths & AI (Common Sense)",
+        url: "https://www.commonsense.org/education/articles/ai-literacy-lessons-for-grades-6-12",
+        category: "AI Literacy & Media Verification",
+        license: "Free / Open Access",
+        costDetail: "100% Free Curriculum",
+        gradeBand: "Grades 6–12 (Middle, High)",
+        summary: "Interactive Common Sense Education lesson where students analyze pairs of media artifacts to distinguish authentic journalism from AI hallucinations.",
+        teacherUse: "Facilitate a 20-minute advisory or ELA mini-lesson on spotting fabricated citations and synthetic images.",
+        librarianUse: "Anchor Digital Citizenship Week programming in the school library with ready-to-teach slide decks.",
+        privacyNote: "Open web curriculum resources with no student login required.",
+        tags: ["Digital Citizenship", "Hallucinations", "Common Sense", "Media Literacy"]
+      },
+      {
+        id: 10,
+        name: "How to SIFT with AI (Common Sense)",
+        url: "https://www.commonsense.org/education/digital-citizenship/lesson/how-to-sift-with-ai",
+        category: "AI Literacy & Media Verification",
+        license: "Free / Open Access",
+        costDetail: "100% Free Lesson & Handouts",
+        gradeBand: "Grades 7–12 (Middle, High)",
+        summary: "Adapts Mike Caulfield's SIFT fact-checking method (Stop, Investigate, Find better coverage, Trace claims) for verifying AI-generated summaries.",
+        teacherUse: "Train students to cross-check AI overview claims against authoritative databases before citing facts.",
+        librarianUse: "Integrate SIFT verification checklists directly into library research LibGuides and database instruction.",
+        privacyNote: "Free downloadable Google Slides, student handouts, and teacher guides.",
+        tags: ["SIFT Method", "Fact-Checking", "Lateral Reading", "Source Verification"]
+      },
+      {
+        id: 11,
+        name: "Civic Online Reasoning (Digital Inquiry Group)",
+        url: "https://cor.inquirygroup.org",
+        category: "AI Literacy & Media Verification",
+        license: "Free / Open Access",
+        costDetail: "100% Free Research-Backed Curriculum",
+        gradeBand: "Grades 6–12 (Middle, High)",
+        summary: "Stanford-born curriculum (now Digital Inquiry Group) teaching students how professional fact-checkers evaluate websites, social feeds, and viral claims.",
+        teacherUse: "Assign short 'Click Restraint' and 'Who's Behind the Information?' assessments in Social Studies and Science.",
+        librarianUse: "Replace outdated CRAAP checklists with evidence-based lateral reading lessons across the school.",
+        privacyNote: "Free educator registration to download classroom assessments and rubrics; no student accounts needed.",
+        tags: ["Lateral Reading", "Click Restraint", "Fact-Checking", "Civic Literacy"]
+      },
+      {
+        id: 12,
+        name: "Code.org AI & AI for Oceans",
+        url: "https://code.org/ai",
+        category: "AI Literacy & Media Verification",
+        license: "Free / Open Access",
+        costDetail: "100% Free Interactive Modules",
+        gradeBand: "Grades 3–12 (Elementary, Middle, High)",
+        summary: "Hands-on machine learning simulations where students train an AI bot to classify ocean creatures vs. trash, uncovering training-data bias firsthand.",
+        teacherUse: "Run an Hour of Code or STEM unit demonstrating how biased training data leads to unfair algorithmic decisions.",
+        librarianUse: "Host a makerspace or library media center station exploring algorithmic bias in elementary and middle grades.",
+        privacyNote: "Browser-based interactive simulations playable without student accounts.",
+        tags: ["Training Data", "Algorithmic Bias", "Machine Learning", "Hour of Code"]
+      },
+      {
+        id: 13,
+        name: "AI Literacy Framework for Students",
+        url: "https://www.ailiteracyframework.org",
+        category: "AI Literacy & Media Verification",
+        license: "Free / Open Access",
+        costDetail: "Open Access Policy & Scope Guide",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Structured K–12 scope-and-sequence framework defining core competencies in understanding, evaluating, and ethically using AI systems.",
+        teacherUse: "Map grade-level AI literacy expectations into existing ELA, Computer Science, and Social Studies syllabi.",
+        librarianUse: "Guide district library committees in drafting school-wide AI acceptable-use policies and vertical curriculum maps.",
+        privacyNote: "Open reference framework; no user tracking or accounts.",
+        tags: ["Curriculum Map", "AI Policy", "K-12 Standards", "Ethical AI"]
+      },
+      {
+        id: 14,
+        name: "Teachable Machine (Google)",
+        url: "https://teachablemachine.withgoogle.com",
+        category: "AI Literacy & Media Verification",
+        license: "Free / Open Access",
+        costDetail: "100% Free Browser-Based ML Studio",
+        gradeBand: "Grades 4–12 (Elementary, Middle, High)",
+        summary: "No-code web tool enabling students to train custom image, audio, or pose classification models in minutes using their webcam or uploaded samples.",
+        teacherUse: "Demonstrate overfitting, confidence scores, and edge cases in science and computer literacy classes.",
+        librarianUse: "Lead interactive 'How AI Sees' makerspace workshops where students test model accuracy and bias live.",
+        privacyNote: "Runs locally in the browser using TensorFlow.js; webcam frames never leave the student's device.",
+        tags: ["No-Code ML", "Computer Vision", "Privacy-First", "Makerspace"]
+      },
+      {
+        id: 15,
+        name: "QuillBot AI Detector",
+        url: "https://quillbot.com/ai-content-detector",
+        category: "AI Literacy & Media Verification",
+        license: "Free / Open Access",
+        costDetail: "Free Browser Check (No Login)",
+        gradeBand: "Grades 8–12 (Middle, High)",
+        summary: "Sentence-level probability analyzer useful in media literacy lessons for demonstrating how probabilistic AI detectors work—and why false positives occur.",
+        teacherUse: "Conduct live classroom demonstrations showing why AI detectors are probabilistic indicators rather than definitive proof.",
+        librarianUse: "Train faculty on the limitations of AI detection tools and promote process-based research checkpoints instead.",
+        privacyNote: "Do not paste confidential student PII; best used with sample public texts for instructional demos.",
+        tags: ["AI Detection Demo", "False Positives", "Academic Integrity", "Probability"]
+      },
+      {
+        id: 16,
+        name: "Scribbr AI Detector",
+        url: "https://www.scribbr.com/ai-detector/",
+        category: "AI Literacy & Media Verification",
+        license: "Free / Open Access",
+        costDetail: "Free Web Utility",
+        gradeBand: "Grades 9–12 (High School)",
+        summary: "Paragraph-level text analysis tool highlighting patterns typical of LLM-generated prose vs. human-edited academic writing.",
+        teacherUse: "Compare raw AI output against heavily revised human drafts to discuss voice, syntax predictability, and burstiness.",
+        librarianUse: "Support high school senior capstone advisors in teaching transparent AI disclosure and citation practices.",
+        privacyNote: "Free web interface requiring no student account creation.",
+        tags: ["Writing Analysis", "Capstone Support", "Academic Honesty", "Text Forensics"]
+      },
+      {
+        id: 17,
+        name: "Undetectable AI (Media Literacy Demo)",
+        url: "https://undetectable.ai",
+        category: "AI Literacy & Media Verification",
+        license: "Freemium for Educators",
+        costDetail: "Free Detector Demo Tier",
+        gradeBand: "Grades 9–12 (High School)",
+        summary: "Demonstrates how easily 'AI humanizer' paraphrasers bypass automated detectors—proving why schools must prioritize authentic inquiry over detector policing.",
+        teacherUse: "Show faculty and older students why detector arms races fail and why oral defenses and draft histories matter.",
+        librarianUse: "Lead critical PD sessions with administrators and teachers on designing AI-resilient research assignments.",
+        privacyNote: "Use strictly for faculty PD and controlled media-literacy demonstrations.",
+        tags: ["PD Demonstration", "Detector Limits", "AI-Resilient Design", "Critical Literacy"]
+      },
+
+      // =======================================================================
+      // CATEGORY 3: Research, Citations & Source Analysis (7 Tools)
+      // =======================================================================
+      {
+        id: 18,
+        name: "Zotero",
+        url: "https://www.zotero.org",
+        category: "Research, Citations & Source Analysis",
+        license: "True Open Source",
+        costDetail: "AGPLv3 Open Source (Free Software)",
+        gradeBand: "Grades 8–12 (Middle, High)",
+        summary: "Gold-standard open-source reference manager that captures bibliographic metadata in one click and generates MLA, APA, and Chicago bibliographies.",
+        teacherUse: "Require AP Seminar, IB Extended Essay, and History Day students to organize annotated bibliographies in shared folders.",
+        librarianUse: "Teach college-ready citation management and PDF annotation workflows that students keep free for life.",
+        privacyNote: "True open-source nonprofit software; local library storage works completely offline without cloud lock-in.",
+        tags: ["Open Source", "MLA/APA/Chicago", "Bibliography", "AP/IB Research"]
+      },
+      {
+        id: 19,
+        name: "NotebookLM",
+        url: "https://notebooklm.google.com",
+        category: "Research, Citations & Source Analysis",
+        license: "Free / Open Access",
+        costDetail: "Free with Google Account (Workspace Edu Supported)",
+        gradeBand: "Grades 8–12 (Middle, High)",
+        summary: "Source-grounded AI research notebook that answers questions strictly from uploaded PDFs, Docs, and transcripts with clickable inline citations.",
+        teacherUse: "Upload a curated packet of primary sources so students can query themes and verify every answer against exact source passages.",
+        librarianUse: "Build curated 'Library Research Notebooks' on controversial topics and generate Audio Overviews for multimodal learners.",
+        privacyNote: "Google Workspace for Education accounts include enterprise data protection; uploaded files are not used to train public models.",
+        tags: ["Source-Grounded", "Inline Citations", "Audio Overview", "Primary Sources"]
+      },
+      {
+        id: 20,
+        name: "Elicit",
+        url: "https://elicit.com",
+        category: "Research, Citations & Source Analysis",
+        license: "Freemium for Educators",
+        costDetail: "Free Basic Tier",
+        gradeBand: "Grades 10–12 (High School)",
+        summary: "AI research assistant built on Semantic Scholar that finds peer-reviewed papers, extracts methodology/sample sizes, and synthesizes findings in tables.",
+        teacherUse: "Guide AP Research and Science Fair students through rapid literature reviews with direct links to real academic studies.",
+        librarianUse: "Demonstrate how specialized academic AI searches real scholarly metadata rather than inventing fake citations.",
+        privacyNote: "Grounds every row in verifiable Semantic Scholar paper records.",
+        tags: ["Literature Review", "AP Research", "Peer-Reviewed", "Evidence Tables"]
+      },
+      {
+        id: 21,
+        name: "Johnny's AI Library",
+        url: "https://www.johnnysailibrary.com",
+        category: "Research, Citations & Source Analysis",
+        license: "Free / Open Access",
+        costDetail: "100% Free Librarian-Curated Hub",
+        gradeBand: "K–12 & Educator PD",
+        summary: "Librarian-built directory and prompt repository curated specifically for school library workflows, readers' advisory, and ethical AI integration.",
+        teacherUse: "Browse tested educational AI workflows vetted by practicing library media specialists.",
+        librarianUse: "Access ready-made library prompts for collection development, newsletter drafting, and book display ideation.",
+        privacyNote: "Open web reference resource; no student data collected.",
+        tags: ["Librarian-Built", "Prompt Library", "Readers' Advisory", "School Libraries"]
+      },
+      {
+        id: 22,
+        name: "Semantic Scholar",
+        url: "https://www.semanticscholar.org",
+        category: "Research, Citations & Source Analysis",
+        license: "Free / Open Access",
+        costDetail: "100% Free (Allen Institute for AI Nonprofit)",
+        gradeBand: "Grades 9–12 (High School)",
+        summary: "Free AI-powered academic search engine indexing 200M+ scientific papers with one-sentence 'TLDR' summaries and citation influence graphs.",
+        teacherUse: "Help high school biology, psychology, and capstone students locate open-access scholarly studies beyond general web search.",
+        librarianUse: "Bridge the gap between subscription school databases (EBSCO/Gale) and university-level open-access scholarship.",
+        privacyNote: "Nonprofit research tool requiring no account to search, filter open-access PDFs, or export BibTeX.",
+        tags: ["Nonprofit", "Academic Search", "TLDR Summaries", "Open Access PDFs"]
+      },
+      {
+        id: 23,
+        name: "Perplexity AI",
+        url: "https://www.perplexity.ai",
+        category: "Research, Citations & Source Analysis",
+        license: "Freemium for Educators",
+        costDetail: "Free Tier (No Login Required for Basic Search)",
+        gradeBand: "Grades 8–12 (Middle, High)",
+        summary: "Conversational answer engine that searches the live web and attaches numbered footnote links to every claim for immediate source verification.",
+        teacherUse: "Model live lateral reading in class by clicking footnote badges to evaluate whether cited sources are authoritative.",
+        librarianUse: "Compare footnote-backed search engines against ungrounded chatbots during senior research bootcamps.",
+        privacyNote: "Usable without login; teach students to inspect source quality rather than blindly trusting synthesized text.",
+        tags: ["Footnote Citations", "Live Web Search", "Source Verification", "Inquiry"]
+      },
+      {
+        id: 24,
+        name: "Connected Papers",
+        url: "https://www.connectedpapers.com",
+        category: "Research, Citations & Source Analysis",
+        license: "Freemium for Educators",
+        costDetail: "Free Visual Graph Searches per Month",
+        gradeBand: "Grades 10–12 (High School)",
+        summary: "Visual citation network generator that turns a single seed paper into an interactive force-directed graph of prior foundational works and derivative studies.",
+        teacherUse: "Help AP Research students discover seminal studies and trace how a scientific debate evolved over time.",
+        librarianUse: "Teach 'citation chaining' visually in 60 seconds during advanced research consultations.",
+        privacyNote: "No account required for initial graph explorations.",
+        tags: ["Citation Chaining", "Visual Graph", "Literature Mapping", "AP Capstone"]
+      },
+
+      // =======================================================================
+      // CATEGORY 4: Design, Video & Interactive Coding (15 Tools)
+      // =======================================================================
+      {
+        id: 25,
+        name: "Canva for Education",
+        url: "https://www.canva.com/education/",
+        category: "Design, Video & Interactive Coding",
+        license: "Free / Open Access",
+        costDetail: "100% Free Pro Features for K–12 Schools",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Full-featured visual design, infographic, video, and whiteboard studio unlocked completely free for verified K–12 teachers and students.",
+        teacherUse: "Assign infographics, historical newspapers, book trailers, and collaborative group whiteboards.",
+        librarianUse: "Design shelf talkers, genre signage, annual library impact reports, and student media creation templates.",
+        privacyNote: "COPPA & FERPA compliant via district/school verification; moderated Safe Search image library.",
+        tags: ["Infographics", "Book Trailers", "Signage", "Visual Communication"]
+      },
+      {
+        id: 26,
+        name: "Pictory",
+        url: "https://pictory.ai",
+        category: "Design, Video & Interactive Coding",
+        license: "Freemium for Educators",
+        costDetail: "Free Trial / Educator Discounts",
+        gradeBand: "Grades 6–12 (Middle, High)",
+        summary: "Script-to-video generator that transforms written summaries, blog posts, or book reviews into captioned storyboard videos with stock visuals.",
+        teacherUse: "Convert student-written PSA scripts or lesson recaps into captioned video presentations without complex timeline editing.",
+        librarianUse: "Turn monthly library newsletter highlights or book talks into engaging lobby monitor videos.",
+        privacyNote: "Teacher-managed account recommended for K–12 media production.",
+        tags: ["Script-to-Video", "Auto-Captions", "Book Talks", "Digital Storytelling"]
+      },
+      {
+        id: 27,
+        name: "Replit",
+        url: "https://replit.com",
+        category: "Design, Video & Interactive Coding",
+        license: "Freemium for Educators",
+        costDetail: "Free Starter Tier (Browser IDE)",
+        gradeBand: "Grades 6–12 (Middle, High)",
+        summary: "Zero-setup browser-based coding environment supporting Python, HTML/CSS/JS, Java, and C++ right on school Chromebooks.",
+        teacherUse: "Run Python data science, web development, and AP CSP coding labs without IT software installation hurdles.",
+        librarianUse: "Host after-school coding clubs and interactive web-design workshops on shared library Chromebooks.",
+        privacyNote: "Cloud-hosted IDE requiring zero local admin rights.",
+        tags: ["Browser IDE", "Python & Web", "Chromebook-Ready", "CS Education"]
+      },
+      {
+        id: 28,
+        name: "Penpot",
+        url: "https://penpot.app",
+        category: "Design, Video & Interactive Coding",
+        license: "True Open Source",
+        costDetail: "MPL 2.0 Open Source (100% Free)",
+        gradeBand: "Grades 7–12 (Middle, High)",
+        summary: "Open-source, browser-based UI/UX design and prototyping platform (open alternative to Figma) built on open web standards like SVG and CSS.",
+        teacherUse: "Teach app wireframing, design thinking, and interactive prototyping in digital media and computer science courses.",
+        librarianUse: "Provide students with an open-source, subscription-free design studio that works on any Chromebook browser.",
+        privacyNote: "True open-source software; can be used via hosted free tier or self-hosted by districts.",
+        tags: ["Open Source", "UI/UX Prototyping", "Figma Alternative", "Design Thinking"]
+      },
+      {
+        id: 29,
+        name: "Book Creator",
+        url: "https://bookcreator.com",
+        category: "Design, Video & Interactive Coding",
+        license: "Freemium for Educators",
+        costDetail: "Free Teacher Library (Up to 40 Books)",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Multimodal digital book publishing studio where students combine text, voice recordings, drawings, video, and comics into readable ePubs.",
+        teacherUse: "Publish class anthologies, bilingual storybooks, science lab journals, and digital portfolios.",
+        librarianUse: "Host student-authored digital books in a virtual school library showcase readable by families.",
+        privacyNote: "COPPA & FERPA compliant; students join teacher libraries via invite code without personal emails.",
+        tags: ["Digital Publishing", "Multimodal", "ePub", "Student Authors"]
+      },
+      {
+        id: 30,
+        name: "Padlet",
+        url: "https://padlet.com",
+        category: "Design, Video & Interactive Coding",
+        license: "Freemium for Educators",
+        costDetail: "Free Tier (Up to 3 Active Boards)",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Collaborative digital bulletin board, timeline, and map canvas for real-time class brainstorming, book recommendations, and exit tickets.",
+        teacherUse: "Build interactive historical timelines, gallery walks, and peer-feedback walls in seconds.",
+        librarianUse: "Curate collaborative 'What Are You Reading?' recommendation walls and resource pathfinders.",
+        privacyNote: "Supports anonymous/nickname posting with teacher moderation approval before posts appear.",
+        tags: ["Collaborative Wall", "Timelines", "Gallery Walk", "Book Recommendations"]
+      },
+      {
+        id: 31,
+        name: "Wakelet",
+        url: "https://wakelet.com",
+        category: "Design, Video & Interactive Coding",
+        license: "Free / Open Access",
+        costDetail: "100% Free for Educators & Students",
+        gradeBand: "Grades 3–12 (Elementary, Middle, High)",
+        summary: "Visual content curation platform for organizing articles, videos, PDFs, and notes into clean newsletters, research pathfinders, and portfolios.",
+        teacherUse: "Package vetted unit links into a single distraction-free collection with built-in Immersive Reader support.",
+        librarianUse: "Replace static link lists with visual LibGuides, summer reading lists, and faculty PD collections.",
+        privacyNote: "COPPA & FERPA compliant; built-in Microsoft Immersive Reader improves accessibility.",
+        tags: ["Content Curation", "LibGuides", "Immersive Reader", "Digital Portfolios"]
+      },
+      {
+        id: 32,
+        name: "Symbaloo",
+        url: "https://www.symbaloo.com",
+        category: "Design, Video & Interactive Coding",
+        license: "Freemium for Educators",
+        costDetail: "Free Educator Webmix Tier",
+        gradeBand: "K–8 (Elementary, Middle)",
+        summary: "Visual tile-based bookmarking 'Webmix' grid enabling younger learners to launch vetted databases and learning apps with a single icon click.",
+        teacherUse: "Create visual center-rotation boards for K–5 students who struggle with typing long URLs.",
+        librarianUse: "Build the library's elementary homepage portal with color-coded tiles for ebooks, encyclopedias, and coding.",
+        privacyNote: "Public Webmixes require zero student logins to click and launch resources.",
+        tags: ["Visual Bookmarks", "K-5 Portal", "Webmix", "Library Homepage"]
+      },
+      {
+        id: 33,
+        name: "ThingLink",
+        url: "https://www.thinglink.com",
+        category: "Design, Video & Interactive Coding",
+        license: "Freemium for Educators",
+        costDetail: "Free Teacher Account",
+        gradeBand: "Grades 3–12 (Elementary, Middle, High)",
+        summary: "Interactive media creator that embeds clickable audio, text, video, and quiz hotspots onto images, maps, infographics, and 360° photos.",
+        teacherUse: "Have students annotate historical maps, cell diagrams, or art masterpieces with voice-over explanations.",
+        librarianUse: "Create interactive virtual library orientation tours and clickable genre maps.",
+        privacyNote: "Includes built-in Immersive Reader translation and text-to-speech on every hotspot.",
+        tags: ["Interactive Images", "360 Virtual Tours", "Annotated Maps", "Accessibility"]
+      },
+      {
+        id: 34,
+        name: "Scratch (MIT)",
+        url: "https://scratch.mit.edu",
+        category: "Design, Video & Interactive Coding",
+        license: "True Open Source",
+        costDetail: "BSD / GPL Open Source (100% Free Nonprofit)",
+        gradeBand: "Grades 2–8 (Elementary, Middle)",
+        summary: "MIT's iconic block-based visual programming language and global community where students code interactive stories, games, and animations.",
+        teacherUse: "Integrate computational thinking into ELA and Science through animated book reports and ecosystem simulations.",
+        librarianUse: "Run library coding clubs, remix challenges, and unplugged-to-digital makerspace sessions.",
+        privacyNote: "Strict community moderation, zero ads, and offline desktop editor available.",
+        tags: ["Open Source", "Block Coding", "MIT", "Interactive Stories"]
+      },
+      {
+        id: 35,
+        name: "Twine",
+        url: "https://twinery.org",
+        category: "Design, Video & Interactive Coding",
+        license: "True Open Source",
+        costDetail: "GPL Open Source (100% Free Web & Desktop)",
+        gradeBand: "Grades 5–12 (Middle, High)",
+        summary: "Open-source storytelling engine for writing branching 'Choose Your Own Adventure' interactive fiction and playable historical simulations.",
+        teacherUse: "Assign branching narrative essays in ELA or historical decision-point simulations in Social Studies.",
+        librarianUse: "Host creative writing and interactive fiction workshops; exports standalone HTML files playable anywhere.",
+        privacyNote: "Runs completely client-side in the browser with zero account creation or cloud tracking.",
+        tags: ["Open Source", "Interactive Fiction", "Branching Narrative", "Creative Writing"]
+      },
+      {
+        id: 36,
+        name: "Audacity",
+        url: "https://www.audacityteam.org",
+        category: "Design, Video & Interactive Coding",
+        license: "True Open Source",
+        costDetail: "GPLv3 Open Source (100% Free)",
+        gradeBand: "Grades 4–12 (Elementary, Middle, High)",
+        summary: "Cross-platform open-source multi-track audio recorder and editor for student podcasts, oral history interviews, and radio dramas.",
+        teacherUse: "Produce classroom podcasts, world-language speaking portfolios, and audiobook dramatizations.",
+        librarianUse: "Equip library podcasting booths and digital media labs with industry-standard free audio editing.",
+        privacyNote: "100% local desktop audio processing; no student voice recordings uploaded to third-party servers.",
+        tags: ["Open Source", "Podcasting", "Audio Editing", "Oral History"]
+      },
+      {
+        id: 37,
+        name: "OBS Studio",
+        url: "https://obsproject.com",
+        category: "Design, Video & Interactive Coding",
+        license: "True Open Source",
+        costDetail: "GPLv2 Open Source (100% Free)",
+        gradeBand: "Grades 6–12 (Middle, High)",
+        summary: "Professional open-source screen recording and live broadcast studio for green-screen morning announcements and video tutorials.",
+        teacherUse: "Record crisp flipped-classroom screencasts with picture-in-picture webcam overlays and zero watermarks.",
+        librarianUse: "Power the school library's student-run morning news broadcast and green-screen production studio.",
+        privacyNote: "100% local open-source software with zero cloud uploads, watermarks, or time limits.",
+        tags: ["Open Source", "Morning Announcements", "Screen Recording", "Green Screen"]
+      },
+      {
+        id: 38,
+        name: "Inkscape",
+        url: "https://inkscape.org",
+        category: "Design, Video & Interactive Coding",
+        license: "True Open Source",
+        costDetail: "GPLv2+ Open Source (100% Free)",
+        gradeBand: "Grades 6–12 (Middle, High)",
+        summary: "Professional open-source vector graphics editor (open alternative to Adobe Illustrator) ideal for scalable illustrations and makerspace fabrication.",
+        teacherUse: "Teach vector geometry, logo design, and digital illustration without expensive Adobe Creative Cloud licenses.",
+        librarianUse: "Prepare SVG cut files for library makerspace laser cutters, Cricut vinyl cutters, and 3D modeling extrusions.",
+        privacyNote: "Free open-source desktop software with native SVG open-standard support.",
+        tags: ["Open Source", "Vector Graphics", "Makerspace SVG", "Laser/Cricut"]
+      },
+      {
+        id: 39,
+        name: "H5P",
+        url: "https://h5p.org",
+        category: "Design, Video & Interactive Coding",
+        license: "True Open Source",
+        costDetail: "MIT Open Source (100% Free HTML5 Content)",
+        gradeBand: "Grades 4–12 (Elementary, Middle, High)",
+        summary: "Open-source framework for creating 50+ interactive HTML5 learning activities including interactive videos, flashcards, timelines, and branching scenarios.",
+        teacherUse: "Embed comprehension checkpoints directly inside instructional videos and embed them into Moodle or Canvas.",
+        librarianUse: "Build self-paced, interactive library orientation tutorials and citation escape rooms.",
+        privacyNote: "Open-source HTML5 standard; integrates seamlessly with Moodle and open LMS platforms.",
+        tags: ["Open Source", "Interactive Video", "HTML5", "Self-Paced Tutorials"]
+      },
+
+      // =======================================================================
+      // CATEGORY 5: Library Curation, Readers' Advisory & Systems (19 Tools)
+      // =======================================================================
+      {
+        id: 40,
+        name: "The StoryGraph",
+        url: "https://app.thestorygraph.com",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Freemium for Educators",
+        costDetail: "Free Core Platform (Independent, Black-Woman-Owned)",
+        gradeBand: "Grades 8–12 (Middle, High)",
+        summary: "Mood-, pace-, and character-driven book tracking and recommendation platform with rich reading statistics and user-submitted content warnings.",
+        teacherUse: "Help high school independent reading students discover titles matched to pacing, mood, and thematic preferences.",
+        librarianUse: "Deliver nuanced readers' advisory beyond bestseller algorithms and check community-vetted content notes.",
+        privacyNote: "Independent platform free of Amazon/Goodreads ad ecosystems; high school age-appropriate.",
+        tags: ["Readers' Advisory", "Mood & Pace", "Content Warnings", "Reading Stats"]
+      },
+      {
+        id: 41,
+        name: "Diverse BookFinder",
+        url: "https://diversebookfinder.org",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Free / Open Access",
+        costDetail: "100% Free Collection Analysis Tool & Database",
+        gradeBand: "PreK–5 (Elementary)",
+        summary: "Research-backed database and Collection Analysis Tool (CAT) analyzing how Black, Indigenous, and People of Color are depicted in picture books.",
+        teacherUse: "Select authentic, non-stereotypical picture books that portray diverse characters across everyday, joyful, and historical contexts.",
+        librarianUse: "Upload your library's MARC/ISBN export into the free Collection Analysis Tool to audit picture book representation.",
+        privacyNote: "Nonprofit academic research initiative; zero student data involved in collection audits.",
+        tags: ["Diversity Audit", "Picture Books", "Collection Analysis", "Representation"]
+      },
+      {
+        id: 42,
+        name: "Social Justice Books (Teaching for Change)",
+        url: "https://socialjusticebooks.org",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Free / Open Access",
+        costDetail: "100% Free Curated Booklists & Reviews",
+        gradeBand: "PreK–12 (Elementary, Middle, High)",
+        summary: "Over 100 carefully vetted multicultural and social justice booklists for children, young adults, and educators, paired with critical book reviews.",
+        teacherUse: "Find historically accurate, anti-bias trade books to pair with U.S. history, civics, and global studies units.",
+        librarianUse: "Guide collection development purchases and weeding decisions with educator-reviewed multicultural bibliographies.",
+        privacyNote: "Open access nonprofit resource; no logins required.",
+        tags: ["Multicultural Books", "Collection Development", "Book Reviews", "Anti-Bias"]
+      },
+      {
+        id: 43,
+        name: "TeachingBooks",
+        url: "https://www.teachingbooks.net",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Freemium for Educators",
+        costDetail: "Statewide Free Access in 35+ U.S. States / Subscription",
+        gradeBand: "PreK–12 (Elementary, Middle, High)",
+        summary: "Multimedia K–12 book enrichment portal featuring author name pronunciations, video book trailers, lesson plans, and collection diversity analysis.",
+        teacherUse: "Play authentic author name-pronunciation recordings before read-alouds and access ready-made discussion guides.",
+        librarianUse: "Generate instant QR-code shelf labels for every book in your catalog and run automated collection diversity audits.",
+        privacyNote: "State library and district licensed; direct IP/barcode access without student PII.",
+        tags: ["Author Pronunciations", "Book Trailers", "QR Shelf Labels", "Collection Audit"]
+      },
+      {
+        id: 44,
+        name: "NoveList K–8 Plus",
+        url: "https://www.ebsco.com/novelist/products/novelist-k-8-plus",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Freemium for Educators",
+        costDetail: "Free via Many State Libraries & Public Library Cards",
+        gradeBand: "K–8 (Elementary, Middle)",
+        summary: "Premier librarian-curated readers' advisory database offering 'Read-Alikes', appeal factors, Lexile ranges, and curricular connection guides.",
+        teacherUse: "Find high-interest fiction and nonfiction titles aligned to specific grade bands, Lexile levels, and curriculum themes.",
+        librarianUse: "Answer 'What should I read next after Wings of Fire or Percy Jackson?' in seconds using appeal-factor search.",
+        privacyNote: "Accessible via state library portals or public library card authentication.",
+        tags: ["Read-Alikes", "Lexile", "Readers' Advisory", "State Library Access"]
+      },
+      {
+        id: 45,
+        name: "Sora (OverDrive)",
+        url: "https://soraapp.com",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Freemium for Educators",
+        costDetail: "Free App + Free Public Library Connect Integration",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Student reading app providing 24/7 access to school ebooks, audiobooks, read-alongs, and seamless integration with local public library collections.",
+        teacherUse: "Assign simultaneous-use class novels with built-in dyslexic fonts, lookup dictionaries, and note exports.",
+        librarianUse: "Expand your school collection overnight by connecting students to their local public library's juvenile/YA OverDrive catalog.",
+        privacyNote: "FERPA & COPPA compliant SSO via Google/Microsoft/Clever; zero late fees.",
+        tags: ["Ebooks & Audiobooks", "Public Library Connect", "Accessibility", "24/7 Reading"]
+      },
+      {
+        id: 46,
+        name: "Titlewave & TitleWise (Follett)",
+        url: "https://www.titlewave.com",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Free / Open Access",
+        costDetail: "Free Collection Analysis & Curation Account for Librarians",
+        gradeBand: "PreK–12 (Elementary, Middle, High)",
+        summary: "Collection development and TitleWise collection analysis suite evaluating library age, Dewey distribution, diversity, and curriculum alignment.",
+        teacherUse: "Collaborate with your school librarian to submit wishlists of current nonfiction and diverse literature for upcoming units.",
+        librarianUse: "Run free TitleWise collection age and diversity audits to justify library budget requests to principals and school boards.",
+        privacyNote: "Educator/librarian collection management tool; processes anonymous MARC records only.",
+        tags: ["TitleWise Audit", "Collection Age", "Budget Advocacy", "MARC Analysis"]
+      },
+      {
+        id: 47,
+        name: "Reading Rockets",
+        url: "https://www.readingrockets.org",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Free / Open Access",
+        costDetail: "100% Free Public Media Literacy Resource (WETA)",
+        gradeBand: "PreK–5 (Elementary)",
+        summary: "Evidence-based Science of Reading strategies, themed children's booklists, author video interviews, and family literacy tip sheets.",
+        teacherUse: "Access research-backed phonological awareness, fluency, and comprehension routines for struggling readers.",
+        librarianUse: "Share bilingual family reading guides and themed booklists with K–5 parents and reading specialists.",
+        privacyNote: "Free public media website requiring zero logins.",
+        tags: ["Science of Reading", "Family Literacy", "Author Interviews", "K-5 Booklists"]
+      },
+      {
+        id: 48,
+        name: "Library of Congress Primary Sources",
+        url: "https://www.loc.gov/programs/teachers/",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Free / Open Access",
+        costDetail: "100% Free Public Domain Archives & Teacher Guides",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Millions of digitized historical photographs, maps, manuscripts, newspapers, and audio recordings paired with Primary Source Analysis tools.",
+        teacherUse: "Use ready-made Primary Source Sets and 'Observe, Reflect, Question' analysis sheets in History and ELA.",
+        librarianUse: "Teach authentic primary-source inquiry using copyright-free public domain artifacts from Chronicling America and LOC.",
+        privacyNote: "U.S. national library open-access archive; no student login required.",
+        tags: ["Primary Sources", "Public Domain", "Observe-Reflect-Question", "Historical Archives"]
+      },
+      {
+        id: 49,
+        name: "Hello History",
+        url: "https://www.hellohistory.ai",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Freemium for Educators",
+        costDetail: "Free Starter Conversations",
+        gradeBand: "Grades 7–12 (Middle, High)",
+        summary: "Interactive AI historical simulation app allowing students to interview historical figures while practicing critical evaluation of AI persona bias.",
+        teacherUse: "Stage structured 'Interview & Fact-Check' activities where students verify an AI persona's claims against primary sources.",
+        librarianUse: "Pair historical AI roleplay with Library of Congress primary sources to teach the difference between simulation and evidence.",
+        privacyNote: "Best used in teacher-guided classroom demos or high school critical literacy exercises.",
+        tags: ["Historical Simulation", "Critical Fact-Checking", "Social Studies", "Persona Analysis"]
+      },
+      {
+        id: 50,
+        name: "Koha ILS",
+        url: "https://koha-community.org",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "True Open Source",
+        costDetail: "GPLv3 Open Source (World's First Free ILS)",
+        gradeBand: "K–12 & District Libraries",
+        summary: "Full-featured, enterprise-grade open-source Integrated Library System supporting MARC21, circulation, cataloging, OPAC discovery, and reporting.",
+        teacherUse: "Search the school library's web OPAC catalog from any classroom browser to place holds on unit book sets.",
+        librarianUse: "Eliminate costly proprietary ILS licensing fees with a full MARC21 catalog, self-checkout, and custom SQL reporting.",
+        privacyNote: "True open-source software giving districts complete ownership and control over patron records.",
+        tags: ["Open Source", "ILS Catalog", "MARC21", "OPAC"]
+      },
+      {
+        id: 51,
+        name: "Omeka",
+        url: "https://omeka.org",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "True Open Source",
+        costDetail: "GPLv3 Open Source (Roy Rosenzweig Center)",
+        gradeBand: "Grades 7–12 (Middle, High)",
+        summary: "Open-source web publishing platform for building scholarly digital archives, Dublin Core metadata collections, and online museum exhibitions.",
+        teacherUse: "Have students curate local oral history exhibits or primary-source museums using real archival metadata standards.",
+        librarianUse: "Digitize and showcase your school's yearbook archive, historical photos, and special collections online.",
+        privacyNote: "Open-source archival software built by historians and librarians for cultural heritage preservation.",
+        tags: ["Open Source", "Digital Exhibits", "Dublin Core", "School Archives"]
+      },
+      {
+        id: 52,
+        name: "Calibre",
+        url: "https://calibre-ebook.com",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "True Open Source",
+        costDetail: "GPLv3 Open Source (100% Free Desktop Suite)",
+        gradeBand: "Grades 6–12 & Library Staff",
+        summary: "Open-source e-book library manager, metadata editor, and format converter supporting EPUB, MOBI, PDF, and local catalog servers.",
+        teacherUse: "Convert student-written digital anthologies between EPUB and PDF for universal tablet and Chromebook reading.",
+        librarianUse: "Manage public-domain e-book collections, edit MARC/EPUB metadata, and host local offline reading servers.",
+        privacyNote: "100% local open-source software; zero DRM lock-in or cloud dependency.",
+        tags: ["Open Source", "EPUB Manager", "Ebook Conversion", "Metadata"]
+      },
+      {
+        id: 53,
+        name: "OER Commons",
+        url: "https://oercommons.org",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Free / Open Access",
+        costDetail: "100% Free Open Educational Resources (Creative Commons)",
+        gradeBand: "K–12 (Elementary, Middle, High)",
+        summary: "Public digital library of over 50,000 openly licensed lesson plans, textbooks, primary source sets, and interactive STEM labs.",
+        teacherUse: "Discover, remix, and adapt Creative Commons curriculum units aligned to Common Core and NGSS standards.",
+        librarianUse: "Lead school-wide OER adoption initiatives to replace outdated textbooks with free, up-to-date open resources.",
+        privacyNote: "Openly licensed public repository; no student accounts required to view or download resources.",
+        tags: ["OER", "Creative Commons", "Free Textbooks", "Standards-Aligned"]
+      },
+      {
+        id: 54,
+        name: "Hypothes.is",
+        url: "https://web.hypothes.is",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "True Open Source",
+        costDetail: "BSD Open Source (Free Web Annotation Layer)",
+        gradeBand: "Grades 8–12 (Middle, High)",
+        summary: "Open-source social web annotation tool allowing classes to highlight, comment, and hold threaded discussions directly in the margins of any webpage or PDF.",
+        teacherUse: "Turn close reading of online articles and historical documents into collaborative margin discussions.",
+        librarianUse: "Teach active lateral reading and source questioning directly atop live news articles and research PDFs.",
+        privacyNote: "Open-source W3C web annotation standard with private classroom group layers.",
+        tags: ["Open Source", "Social Annotation", "Close Reading", "PDF Margin Notes"]
+      },
+      {
+        id: 55,
+        name: "Standard Ebooks",
+        url: "https://standardebooks.org",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "True Open Source",
+        costDetail: "Public Domain & Open Source Typography (100% Free)",
+        gradeBand: "Grades 6–12 (Middle, High)",
+        summary: "Volunteer-driven open-source project producing carefully proofread, modern-typeset editions of classic public-domain literature in EPUB/Kindle formats.",
+        teacherUse: "Distribute clean, error-free digital editions of Frankenstein, Pride and Prejudice, or Narrative of Frederick Douglass to every student.",
+        librarianUse: "Populate school digital reading shelves with unlimited simultaneous-use classics at zero cost.",
+        privacyNote: "100% DRM-free public domain downloads requiring zero logins or tracking.",
+        tags: ["Open Source", "Public Domain Classics", "Unlimited Copies", "DRM-Free EPUB"]
+      },
+      {
+        id: 56,
+        name: "PhET Interactive Simulations",
+        url: "https://phet.colorado.edu",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "True Open Source",
+        costDetail: "GPL / CC-BY Open Source (CU Boulder)",
+        gradeBand: "Grades 3–12 (Elementary, Middle, High)",
+        summary: "Over 160 open-source, research-backed interactive HTML5 math and science simulations covering circuits, fractions, wave interference, and pH.",
+        teacherUse: "Run virtual inquiry labs where students manipulate variables and observe real-time physics and chemistry models.",
+        librarianUse: "Curate STEM inquiry stations and offline HTML5 simulation bundles for classrooms with limited lab equipment.",
+        privacyNote: "Runs completely in the browser with zero student accounts or data collection.",
+        tags: ["Open Source", "STEM Labs", "HTML5 Simulations", "CU Boulder"]
+      },
+      {
+        id: 57,
+        name: "Moodle",
+        url: "https://moodle.org",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "True Open Source",
+        costDetail: "GPLv3 Open Source Learning Management System",
+        gradeBand: "K–12 & District LMS",
+        summary: "World's most widely used open-source Learning Management System supporting course modules, H5P activities, quizzes, rubrics, and gradebooks.",
+        teacherUse: "Organize blended learning modules, self-paced mastery paths, and formative quizzes with full data ownership.",
+        librarianUse: "Host self-paced digital citizenship, research skills, and faculty PD courses inside the school's LMS.",
+        privacyNote: "True open-source LMS; districts retain 100% sovereignty over student data and hosting.",
+        tags: ["Open Source", "LMS", "Data Sovereignty", "Blended Learning"]
+      },
+      {
+        id: 58,
+        name: "Quizizz (Wayground)",
+        url: "https://quizizz.com",
+        category: "Library Curation, Readers' Advisory & Systems",
+        license: "Freemium for Educators",
+        costDetail: "Free Teacher Plan",
+        gradeBand: "Grades 2–12 (Elementary, Middle, High)",
+        summary: "Gamified formative assessment and interactive lesson platform featuring self-paced mastery checks, accommodations, and AI quiz generation.",
+        teacherUse: "Turn study guides or PDFs into self-paced review games with read-aloud accommodations and instant item analysis.",
+        librarianUse: "Run lively library trivia, Dewey Decimal challenges, and Battle of the Books practice rounds.",
+        privacyNote: "Students join via 6-digit game code with nicknames; no student accounts required.",
+        tags: ["Formative Quiz", "Battle of the Books", "Gamified Review", "Accommodations"]
+      }
+    ];
+
+    // =========================================================================
+    // 2. APPLICATION STATE
+    // =========================================================================
+    const state = {
+      searchQuery: "",
+      selectedCategory: "ALL",
+      selectedLicense: "ALL",
+      selectedGrade: "ALL",
+      sortBy: "curated",
+      gridMode: "compact" // 'compact' | 'ultradense' | 'grouped'
+    };
+
+    // =========================================================================
+    // 3. HELPER UTILITIES (DOMAIN, SCREENSHOTS, BADGES, UI MOCKUPS)
+    // =========================================================================
+    function extractDomain(url) {
+      try {
+        return new URL(url).hostname.replace(/^www\./, "");
+      } catch (e) {
+        return "web.app";
+      }
+    }
+
+    function getScreenshotUrl(url) {
+      return `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=480`;
+    }
+
+    function getFaviconUrl(url) {
+      const domain = extractDomain(url);
+      return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
+    }
+
+    function getLicenseBadgeStyle(license) {
+      if (license === "True Open Source") {
+        return {
+          pill: "bg-emerald-50 text-emerald-800 border-emerald-200",
+          dot: "bg-emerald-500",
+          short: "Open Source"
+        };
+      }
+      if (license === "Free / Open Access") {
+        return {
+          pill: "bg-sky-50 text-sky-800 border-sky-200",
+          dot: "bg-sky-500",
+          short: "Free / Open"
+        };
+      }
+      return {
+        pill: "bg-amber-50 text-amber-800 border-amber-200",
+        dot: "bg-amber-500",
+        short: "Edu Freemium"
+      };
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    /**
+     * Generates a crisp, realistic browser-window UI mockup layered underneath
+     * the live WordPress mShot thumbnail so cards ALWAYS display a rich app visual
+     * immediately on load and even if an external screenshot is slow or blocked.
+     */
+    function buildAppPreviewVisual(tool, heightClass = "h-24", isModal = false) {
+      const domain = extractDomain(tool.url);
+      const screenshotUrl = getScreenshotUrl(tool.url);
+      const faviconUrl = getFaviconUrl(tool.url);
+      const catMeta = CATEGORY_META[tool.category] || CATEGORY_META["AI Teaching & Lesson Planning"];
+      const safeName = escapeHtml(tool.name);
+      const safeDomain = escapeHtml(domain);
+
+      return `
+        <div class="relative ${heightClass} w-full overflow-hidden bg-gradient-to-br ${catMeta.bgTint} border-b border-slate-200/80 select-none">
+          <!-- Layer 1: App-Specific Realistic Browser Mockup Fallback (Always Ready) -->
+          <div class="absolute inset-0 p-2 flex flex-col justify-between mockup-grid-bg">
+            <!-- Mini Browser Chrome Bar -->
+            <div class="flex items-center justify-between bg-white/90 backdrop-blur-2xs rounded-md px-2 py-1 border border-slate-200/80 shadow-2xs">
+              <div class="flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              </div>
+              <span class="text-[9px] font-mono text-slate-500 truncate max-w-[130px] sm:max-w-[170px]">${safeDomain}</span>
+              <span class="w-2 h-2 rounded-full opacity-60" style="background:${catMeta.accent}"></span>
+            </div>
+
+            <!-- Simulated App Workspace Cards -->
+            <div class="grid grid-cols-12 gap-1.5 my-auto pt-1.5 px-0.5">
+              <div class="col-span-4 bg-white/85 rounded-md p-1.5 border border-slate-200/70 space-y-1">
+                <div class="h-1.5 w-3/4 rounded-full" style="background:${catMeta.accent}; opacity:0.75"></div>
+                <div class="h-1 w-full rounded-full bg-slate-200"></div>
+                <div class="h-1 w-5/6 rounded-full bg-slate-200"></div>
+              </div>
+              <div class="col-span-8 bg-white/95 rounded-md p-1.5 border border-slate-200/80 flex items-center gap-2 shadow-2xs">
+                <img src="${faviconUrl}" alt="" class="w-5 h-5 rounded object-contain shrink-0" onerror="this.style.display='none'" />
+                <div class="min-w-0 flex-1">
+                  <div class="text-[10px] font-bold text-slate-800 truncate">${safeName}</div>
+                  <div class="flex items-center gap-1 mt-0.5">
+                    <span class="h-1.5 w-10 rounded-full" style="background:${catMeta.accent}; opacity:0.35"></span>
+                    <span class="h-1.5 w-6 rounded-full bg-slate-200"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Layer 2: Real Live Website Screenshot via WordPress mShots -->
+          <img
+            src="${screenshotUrl}"
+            alt="${safeName} live website preview"
+            loading="lazy"
+            class="relative z-10 w-full h-full object-cover object-top transition-opacity duration-300 opacity-0"
+            onload="if(this.naturalWidth > 60){ this.classList.remove('opacity-0'); this.classList.add('opacity-100'); } else { this.remove(); }"
+            onerror="this.remove()"
+          />
+
+          <!-- Subtle Top Gradient Scrim for Badge Legibility -->
+          <div class="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-slate-900/15 to-transparent z-20 pointer-events-none"></div>
+
+          ${!isModal ? `
+            <!-- Floating Favicon Badge Bottom-Left -->
+            <div class="absolute bottom-1.5 left-2 z-20 w-7 h-7 rounded-lg bg-white/95 backdrop-blur-xs border border-slate-200/90 shadow-xs flex items-center justify-center p-1">
+              <img
+                src="${faviconUrl}"
+                alt="${safeName} icon"
+                class="w-full h-full object-contain"
+                onerror="this.replaceWith(Object.assign(document.createElement('span'), {className:'text-[10px] font-bold text-forest', textContent:'${escapeHtml(tool.name.slice(0, 2).toUpperCase())}'}))"
+              />
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 4. FILTERING & SORTING ENGINE
+    // =========================================================================
+    function getFilteredTools() {
+      const q = state.searchQuery.trim().toLowerCase();
+
+      let filtered = toolsData.filter(tool => {
+        // Category filter
+        if (state.selectedCategory !== "ALL" && tool.category !== state.selectedCategory) {
+          return false;
+        }
+
+        // License filter
+        if (state.selectedLicense !== "ALL" && tool.license !== state.selectedLicense) {
+          return false;
+        }
+
+        // Grade band filter
+        if (state.selectedGrade !== "ALL") {
+          const gb = tool.gradeBand.toLowerCase();
+          if (state.selectedGrade === "Elementary") {
+            const isElem = gb.includes("elementary") || gb.includes("k–12") || gb.includes("prek") || gb.includes("k–8") || gb.includes("grades 2") || gb.includes("grades 3") || gb.includes("grades 4") || gb.includes("grades 5");
+            if (!isElem) return false;
+          } else if (state.selectedGrade === "Middle") {
+            const isMid = gb.includes("middle") || gb.includes("k–12") || gb.includes("k–8") || gb.includes("6–12") || gb.includes("5–12") || gb.includes("7–12") || gb.includes("8–12");
+            if (!isMid) return false;
+          } else if (state.selectedGrade === "High") {
+            const isHigh = gb.includes("high") || gb.includes("k–12") || gb.includes("9–12") || gb.includes("10–12") || gb.includes("6–12") || gb.includes("7–12") || gb.includes("8–12");
+            if (!isHigh) return false;
+          }
+        }
+
+        // Real-time search across name, category, summary, gradeBand, use cases, tags
+        if (q) {
+          const haystack = [
+            tool.name,
+            tool.category,
+            tool.summary,
+            tool.gradeBand,
+            tool.teacherUse,
+            tool.librarianUse,
+            tool.license,
+            ...(tool.tags || [])
+          ].join(" ").toLowerCase();
+
+          if (!haystack.includes(q)) return false;
+        }
+
+        return true;
+      });
+
+      // Sorting
+      if (state.sortBy === "az") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (state.sortBy === "za") {
+        filtered.sort((a, b) => b.name.localeCompare(a.name));
+      } else if (state.sortBy === "license") {
+        const rank = { "True Open Source": 1, "Free / Open Access": 2, "Freemium for Educators": 3 };
+        filtered.sort((a, b) => (rank[a.license] || 9) - (rank[b.license] || 9) || a.id - b.id);
+      } else {
+        filtered.sort((a, b) => a.id - b.id);
+      }
+
+      return filtered;
+    }
+
+    // =========================================================================
+    // 5. CARD RENDERERS (COMPACT 4-COL vs. ULTRA-DENSE 5-COL)
+    // =========================================================================
+    function renderCompactCard(tool) {
+      const badge = getLicenseBadgeStyle(tool.license);
+      const safeName = escapeHtml(tool.name);
+      const safeSummary = escapeHtml(tool.summary);
+      const safeGrade = escapeHtml(tool.gradeBand);
+      const safeCat = escapeHtml(tool.category);
+
+      return `
+        <article
+          data-tool-id="${tool.id}"
+          class="tool-tile group bg-white rounded-xl border border-slate-200/95 overflow-hidden flex flex-col justify-between shadow-2xs cursor-pointer"
+        >
+          <div>
+            <!-- 96px Real Website Screenshot + Mockup Header -->
+            <div class="relative">
+              ${buildAppPreviewVisual(tool, "h-24", false)}
+              <!-- Top-Right License Pill -->
+              <span class="absolute top-2 right-2 z-20 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold border shadow-2xs backdrop-blur-xs ${badge.pill}">
+                <span class="w-1.5 h-1.5 rounded-full ${badge.dot}"></span>
+                ${badge.short}
+              </span>
+            </div>
+
+            <!-- Card Text Content -->
+            <div class="p-3.5 pb-2.5">
+              <div class="text-[10px] font-semibold uppercase tracking-wider text-forest/90 truncate mb-0.5">
+                ${safeCat}
+              </div>
+              <h3 class="font-serif text-[15px] font-bold text-slate-900 leading-snug group-hover:text-forest transition-colors line-clamp-1">
+                ${safeName}
+              </h3>
+              <p class="text-xs text-slate-600 leading-relaxed line-clamp-2 mt-1">
+                ${safeSummary}
+              </p>
+            </div>
+          </div>
+
+          <!-- Card Footer: Grade Pill + Guide & Visit Actions -->
+          <div class="px-3.5 pb-3 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[10px] font-medium truncate max-w-[115px]" title="${safeGrade}">
+              ${safeGrade}
+            </span>
+
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                data-action="guide"
+                data-tool-id="${tool.id}"
+                class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-forest-light text-forest hover:bg-forest hover:text-white transition cursor-pointer"
+              >
+                Guide
+              </button>
+              <a
+                href="${escapeHtml(tool.url)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                onclick="event.stopPropagation()"
+                class="inline-flex items-center gap-0.5 px-2 py-1 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition"
+                title="Open ${safeName} in new tab"
+              >
+                <span>Visit</span>
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderUltraDenseCard(tool) {
+      const badge = getLicenseBadgeStyle(tool.license);
+      const safeName = escapeHtml(tool.name);
+      const safeGrade = escapeHtml(tool.gradeBand);
+
+      return `
+        <article
+          data-tool-id="${tool.id}"
+          class="tool-tile group bg-white rounded-xl border border-slate-200/95 overflow-hidden flex flex-col justify-between shadow-2xs cursor-pointer"
+          title="${safeName} — Click for Implementation Guide"
+        >
+          <div>
+            <!-- 72px Micro Visual Header -->
+            <div class="relative">
+              ${buildAppPreviewVisual(tool, "h-[72px]", false)}
+              <span class="absolute top-1.5 right-1.5 z-20 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-semibold border backdrop-blur-xs ${badge.pill}">
+                <span class="w-1.5 h-1.5 rounded-full ${badge.dot}"></span>
+                ${badge.short}
+              </span>
+            </div>
+
+            <!-- Compact Title & Grade -->
+            <div class="p-2.5 pb-2">
+              <h3 class="font-serif text-[13.5px] font-bold text-slate-900 leading-tight group-hover:text-forest transition-colors line-clamp-1">
+                ${safeName}
+              </h3>
+              <p class="text-[10.5px] text-slate-500 truncate mt-0.5">
+                ${safeGrade}
+              </p>
+            </div>
+          </div>
+
+          <!-- Micro Action Strip -->
+          <div class="px-2.5 pb-2 pt-1.5 border-t border-slate-100 flex items-center justify-between gap-1">
+            <span class="text-[10px] font-semibold text-forest group-hover:underline">
+              Implementation Guide →
+            </span>
+            <a
+              href="${escapeHtml(tool.url)}"
+              target="_blank"
+              rel="noopener noreferrer"
+              onclick="event.stopPropagation()"
+              class="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition"
+              title="Open website"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      `;
+    }
+
+    // =========================================================================
+    // 6. MAIN RENDER CONTROLLER (CATEGORY PILLS, MULTI-MODE GRIDS, COUNTS)
+    // =========================================================================
+    function renderCategoryPills() {
+      const container = document.getElementById("categoryPillsContainer");
+      const totalCount = toolsData.length;
+
+      const pills = [
+        { key: "ALL", label: "All", count: totalCount },
+        ...CATEGORIES.map(cat => ({
+          key: cat,
+          label: cat,
+          count: toolsData.filter(t => t.category === cat).length
+        }))
+      ];
+
+      container.innerHTML = pills.map(pill => {
+        const isActive = state.selectedCategory === pill.key;
+        const activeClasses = isActive
+          ? "bg-forest text-white border-forest shadow-2xs"
+          : "bg-white text-slate-700 border-slate-300 hover:bg-slate-50 hover:border-slate-400";
+
+        return `
+          <button
+            type="button"
+            data-category-pill="${escapeHtml(pill.key)}"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border whitespace-nowrap transition cursor-pointer ${activeClasses}"
+          >
+            <span>${escapeHtml(pill.label)}</span>
+            <span class="px-1.5 py-0.2 rounded-full text-[10px] ${isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"}">
+              ${pill.count}
+            </span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderGrid() {
+      const mount = document.getElementById("gridMountPoint");
+      const emptyBox = document.getElementById("emptyStateBox");
+      const statusText = document.getElementById("resultsStatusText");
+      const resetBtn = document.getElementById("resetAllFiltersBtn");
+      const headerTotalBadge = document.getElementById("headerTotalBadge");
+      const exportCsvLabel = document.getElementById("exportCsvLabel");
+
+      headerTotalBadge.textContent = `${toolsData.length} Vetted Tools`;
+      exportCsvLabel.textContent = `Export Excel CSV (${toolsData.length} Tools)`;
+
+      const filtered = getFilteredTools();
+      statusText.textContent = `Showing ${filtered.length} of ${toolsData.length} tools`;
+
+      const hasActiveFilters =
+        state.searchQuery.trim() !== "" ||
+        state.selectedCategory !== "ALL" ||
+        state.selectedLicense !== "ALL" ||
+        state.selectedGrade !== "ALL";
+
+      resetBtn.classList.toggle("hidden", !hasActiveFilters);
+
+      if (filtered.length === 0) {
+        mount.innerHTML = "";
+        emptyBox.classList.remove("hidden");
+        return;
+      }
+
+      emptyBox.classList.add("hidden");
+
+      // MODE 3: GROUPED BY CATEGORY (5 Distinct Category Sections with Sub-Grids)
+      if (state.gridMode === "grouped") {
+        const categoriesToRender = state.selectedCategory === "ALL"
+          ? CATEGORIES
+          : [state.selectedCategory];
+
+        const sectionsHtml = categoriesToRender.map((catName, idx) => {
+          const items = filtered.filter(t => t.category === catName);
+          if (items.length === 0) return "";
+          const meta = CATEGORY_META[catName] || {};
+
+          return `
+            <section class="mb-8 last:mb-2">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2.5 mb-3.5 border-b-2 border-slate-200/90">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-lg bg-forest text-white font-serif font-bold text-xs flex items-center justify-center shrink-0">
+                    ${idx + 1}
+                  </span>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h2 class="font-serif text-base sm:text-lg font-bold text-slate-900">
+                        ${escapeHtml(catName)}
+                      </h2>
+                      <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-forest-light text-forest border border-forest-border">
+                        ${items.length} ${items.length === 1 ? "tool" : "tools"}
+                      </span>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-0.5">${escapeHtml(meta.description || "")}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid-compact">
+                ${items.map(renderCompactCard).join("")}
+              </div>
+            </section>
+          `;
+        }).join("");
+
+        mount.innerHTML = sectionsHtml;
+        return;
+      }
+
+      // MODE 2: ULTRA-DENSE (5-COL)
+      if (state.gridMode === "ultradense") {
+        mount.innerHTML = `
+          <div class="grid-ultradense">
+            ${filtered.map(renderUltraDenseCard).join("")}
+          </div>
+        `;
+        return;
+      }
+
+      // MODE 1 (DEFAULT): COMPACT TILES (4-COL)
+      mount.innerHTML = `
+        <div class="grid-compact">
+          ${filtered.map(renderCompactCard).join("")}
+        </div>
+      `;
+    }
+
+    function updateGridModeButtons() {
+      document.querySelectorAll(".grid-mode-btn").forEach(btn => {
+        const isCurrent = btn.getAttribute("data-grid-mode") === state.gridMode;
+        if (isCurrent) {
+          btn.classList.add("bg-white", "text-forest", "shadow-2xs");
+          btn.classList.remove("text-slate-600", "hover:text-slate-900");
+        } else {
+          btn.classList.remove("bg-white", "text-forest", "shadow-2xs");
+          btn.classList.add("text-slate-600", "hover:text-slate-900");
+        }
+      });
+    }
+
+    // =========================================================================
+    // 7. MODALS & CSV EXPORT
+    // =========================================================================
+    function openImplementationGuide(toolId) {
+      const tool = toolsData.find(t => t.id === Number(toolId));
+      if (!tool) return;
+
+      const badge = getLicenseBadgeStyle(tool.license);
+      const domain = extractDomain(tool.url);
+
+      document.getElementById("modalVisualHeader").innerHTML = buildAppPreviewVisual(tool, "h-full", true);
+      document.getElementById("modalFavicon").src = getFaviconUrl(tool.url);
+      document.getElementById("modalToolTitle").textContent = tool.name;
+
+      const badgeEl = document.getElementById("modalLicenseBadge");
+      badgeEl.className = `px-2.5 py-0.5 rounded-full text-xs font-semibold border ${badge.pill}`;
+      badgeEl.textContent = tool.license;
+
+      document.getElementById("modalCategoryText").textContent = tool.category;
+      document.getElementById("modalVisitLink").href = tool.url;
+      document.getElementById("modalGradeBand").textContent = tool.gradeBand;
+      document.getElementById("modalCostDetail").textContent = tool.costDetail || tool.license;
+      document.getElementById("modalDomainText").textContent = domain;
+      document.getElementById("modalSummaryText").textContent = tool.summary;
+      document.getElementById("modalTeacherUse").textContent = tool.teacherUse;
+      document.getElementById("modalLibrarianUse").textContent = tool.librarianUse;
+      document.getElementById("modalPrivacyNote").textContent = tool.privacyNote;
+
+      const tagsEl = document.getElementById("modalTagsContainer");
+      tagsEl.innerHTML = (tool.tags || []).map(tag => `
+        <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-medium">
+          #${escapeHtml(tag)}
+        </span>
+      `).join("");
+
+      const modal = document.getElementById("guideModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeImplementationGuide() {
+      const modal = document.getElementById("guideModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function openSubmitModal() {
+      const modal = document.getElementById("submitModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeSubmitModal() {
+      const modal = document.getElementById("submitModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    let toastTimeout = null;
+    function showToast(msg) {
+      const banner = document.getElementById("toastBanner");
+      document.getElementById("toastMessage").textContent = msg;
+      banner.classList.remove("hidden");
+      banner.classList.add("flex");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        banner.classList.add("hidden");
+        banner.classList.remove("flex");
+      }, 3200);
+    }
+
+    function exportExcelCsv() {
+      const headers = [
+        "ID",
+        "Tool Name",
+        "Category",
+        "Access / License Model",
+        "Cost & Licensing Details",
+        "Target Grade Band",
+        "Official URL",
+        "Core Summary",
+        "Classroom Teacher Use Case",
+        "Library Media Specialist Use Case",
+        "Privacy & AI Literacy Note",
+        "Keywords"
+      ];
+
+      const escapeCsvCell = (val) => {
+        const str = String(val ?? "").replace(/"/g, '""');
+        return `"${str}"`;
+      };
+
+      const rows = toolsData.map(t => [
+        t.id,
+        t.name,
+        t.category,
+        t.license,
+        t.costDetail,
+        t.gradeBand,
+        t.url,
+        t.summary,
+        t.teacherUse,
+        t.librarianUse,
+        t.privacyNote,
+        (t.tags || []).join("; ")
+      ].map(escapeCsvCell).join(","));
+
+      // UTF-8 BOM for clean Excel opening
+      const csvContent = "\uFEFF" + [headers.map(escapeCsvCell).join(","), ...rows].join("\r\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const downloadUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = `OpenLibStack_Directory_${toolsData.length}_Tools.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(downloadUrl);
+
+      showToast(`Exported ${toolsData.length} vetted tools to Excel CSV.`);
+    }
+
+    function resetAllFilters() {
+      state.searchQuery = "";
+      state.selectedCategory = "ALL";
+      state.selectedLicense = "ALL";
+      state.selectedGrade = "ALL";
+      state.sortBy = "curated";
+
+      document.getElementById("searchInput").value = "";
+      document.getElementById("clearSearchBtn").classList.add("hidden");
+      document.getElementById("licenseFilter").value = "ALL";
+      document.getElementById("gradeFilter").value = "ALL";
+      document.getElementById("sortSelect").value = "curated";
+
+      renderCategoryPills();
+      renderGrid();
+    }
+
+    // =========================================================================
+    // 8. EVENT LISTENERS & INITIALIZATION
+    // =========================================================================
+    document.addEventListener("DOMContentLoaded", () => {
+      // Initial full render of all 58 tools
+      renderCategoryPills();
+      renderGrid();
+
+      // Search input
+      const searchInput = document.getElementById("searchInput");
+      const clearSearchBtn = document.getElementById("clearSearchBtn");
+
+      searchInput.addEventListener("input", (e) => {
+        state.searchQuery = e.target.value;
+        clearSearchBtn.classList.toggle("hidden", state.searchQuery.length === 0);
+        renderGrid();
+      });
+
+      clearSearchBtn.addEventListener("click", () => {
+        searchInput.value = "";
+        state.searchQuery = "";
+        clearSearchBtn.classList.add("hidden");
+        renderGrid();
+        searchInput.focus();
+      });
+
+      // Dropdown filters
+      document.getElementById("licenseFilter").addEventListener("change", (e) => {
+        state.selectedLicense = e.target.value;
+        renderGrid();
+      });
+
+      document.getElementById("gradeFilter").addEventListener("change", (e) => {
+        state.selectedGrade = e.target.value;
+        renderGrid();
+      });
+
+      document.getElementById("sortSelect").addEventListener("change", (e) => {
+        state.sortBy = e.target.value;
+        renderGrid();
+      });
+
+      // 3-Mode Grid Layout Toggle
+      document.querySelectorAll(".grid-mode-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.gridMode = btn.getAttribute("data-grid-mode");
+          updateGridModeButtons();
+          renderGrid();
+        });
+      });
+
+      // Category Filter Pills (Delegated)
+      document.getElementById("categoryPillsContainer").addEventListener("click", (e) => {
+        const pillBtn = e.target.closest("[data-category-pill]");
+        if (!pillBtn) return;
+        state.selectedCategory = pillBtn.getAttribute("data-category-pill");
+        renderCategoryPills();
+        renderGrid();
+      });
+
+      // Card Click / Guide Button Click (Delegated)
+      document.getElementById("gridMountPoint").addEventListener("click", (e) => {
+        const card = e.target.closest("[data-tool-id]");
+        if (!card) return;
+        const toolId = card.getAttribute("data-tool-id");
+        openImplementationGuide(toolId);
+      });
+
+      // Reset Filters buttons
+      document.getElementById("resetAllFiltersBtn").addEventListener("click", resetAllFilters);
+      document.getElementById("emptyResetBtn").addEventListener("click", resetAllFilters);
+
+      // Export CSV
+      document.getElementById("exportCsvBtn").addEventListener("click", exportExcelCsv);
+
+      // Implementation Guide Modal Close Handlers
+      document.getElementById("closeGuideModalBtn").addEventListener("click", closeImplementationGuide);
+      document.getElementById("guideModal").addEventListener("click", (e) => {
+        if (e.target.id === "guideModal") closeImplementationGuide();
+      });
+
+      // Submit Tool Modal Handlers
+      document.getElementById("openSubmitModalBtn").addEventListener("click", openSubmitModal);
+      document.getElementById("closeSubmitModalX").addEventListener("click", closeSubmitModal);
+      document.getElementById("cancelSubmitModalBtn").addEventListener("click", closeSubmitModal);
+      document.getElementById("submitModal").addEventListener("click", (e) => {
+        if (e.target.id === "submitModal") closeSubmitModal();
+      });
+
+      // Escape key closes open modals
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeImplementationGuide();
+          closeSubmitModal();
+        }
+      });
+
+      // Submit New Tool Form Handler
+      document.getElementById("submitToolForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+
+        const newTool = {
+          id: toolsData.length + 1,
+          name: String(fd.get("name") || "").trim(),
+          url: String(fd.get("url") || "").trim(),
+          category: String(fd.get("category") || CATEGORIES[0]),
+          license: String(fd.get("license") || "Free / Open Access"),
+          costDetail: String(fd.get("costDetail") || "").trim() || String(fd.get("license")),
+          gradeBand: String(fd.get("gradeBand") || "K–12").trim(),
+          summary: String(fd.get("summary") || "").trim(),
+          teacherUse: String(fd.get("teacherUse") || "Supports classroom instruction and student inquiry.").trim(),
+          librarianUse: String(fd.get("librarianUse") || "Valuable addition to school library digital resource pathfinders.").trim(),
+          privacyNote: String(fd.get("privacyNote") || "Review district data privacy policy prior to student account creation.").trim(),
+          tags: ["Community Submitted", String(fd.get("license"))]
+        };
+
+        toolsData.push(newTool);
+        e.target.reset();
+        closeSubmitModal();
+
+        renderCategoryPills();
+        renderGrid();
+        showToast(`Added "${newTool.name}" to OpenLibStack (${toolsData.length} total tools).`);
+      });
+    });
+  </script>
+</body>
+</html>
